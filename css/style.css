@@ -1,0 +1,129 @@
+nav {
+    animation: fadeIn 1000ms ease-out forwards;
+}
+
+h1 {
+    position: relative;
+    letter-spacing: -3px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    transform: translateY(-0.8rem);
+    transition: .3s top;
+}
+
+#tic,
+#tac,
+#toe {
+    position: relative;
+    transition: .3s;
+}
+
+#tic {
+    top: 0rem;
+}
+
+#tac {
+    top: 1.2rem;
+}
+
+#toe {
+    top: 2.4rem;
+}
+
+h1:hover>#tic {
+    top: 1.2rem;
+}
+
+h1:hover>#toe {
+    top: 1.2rem;
+}
+
+
+body {
+    overflow: hidden;
+}
+
+#textField {
+    position: absolute;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#gameContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#gameBoard {
+    max-height: 60vh;
+    min-height: 30vh;
+    transform: translateY(-76px);
+    height: 50vw;
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1vw;
+    font-weight: bold;
+
+    transform: translateX(100vw);
+    animation: rollIn .4s linear forwards;
+}
+
+.cells {
+    width: 100%;
+    height: 100%;
+    border-radius: 5%;
+    background-color: #212529;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4), 1px 1px 2px inset rgba(255, 255, 255, 0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(6vw + 2vh);
+    color: #ced4da;
+
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.cells:hover {
+    transform: scale(103%);
+    box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.5), 1px 1px 2px inset rgba(255, 255, 255, 0.4);
+}
+
+#startBtn {
+    opacity: 0;
+    animation: fadeIn 1000ms 500ms ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes rollIn {
+    0% {}
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes rollOut {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100vw);
+    }
+}
