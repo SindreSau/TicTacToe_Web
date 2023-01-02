@@ -1,5 +1,5 @@
 nav {
-    animation: fadeIn 1000ms ease-out forwards;
+    animation: fadeIn 500ms linear forwards;
 }
 
 h1 {
@@ -55,6 +55,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    animation: fadeIn 1500ms ease-in forwards;
 }
 
 #gameBoard {
@@ -93,11 +95,6 @@ body {
 .cells:hover {
     transform: scale(103%);
     box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.5), 1px 1px 2px inset rgba(255, 255, 255, 0.4);
-}
-
-#startBtn {
-    opacity: 0;
-    animation: fadeIn 1000ms 500ms ease-in forwards;
 }
 
 @keyframes fadeIn {
