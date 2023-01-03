@@ -14,13 +14,18 @@ let scoreX = 0;
 let scoreO = 0;
 
 startBtn.addEventListener('click', () => {
-  startBtn.style.animation = ' rollOut .4s linear forwards';
+  startBtn.style.animation = 'rollOut .4s linear forwards';
   setTimeout(() => startBtn.remove(), 400);
   setTimeout(() => gameBoard.createBoard(), 1000);
 })
 
 const gameBoard = {
   board: document.createElement('div'),
+
+  newBoard: function () {
+    this.board.remove();
+    this.board = document.createElement('div');
+  },
 
   createBoard: function () {
     textField.textContent = "To begin, place a piece on the board. X starts!";
@@ -150,17 +155,28 @@ resetPage.appendChild(resetButton);
 
 resetPage.id = "resetPage";
 resetButton.textContent = "Reset game?";
-resetButton.onclick = resetGame;
 resetButton.className = "btn btn-dark resetButton"
+resetButton.onclick = () => {
+  resetGame();
+};
 
 function askToReset() {
+  resetPage.style.animation = ""
   gameContainer.appendChild(resetPage);
 }
 
 function resetGame() {
-  resetPage.style.animation = ' rollOut .4s linear forwards';
+  alert("Resets")
+  resetPage.style.animation = 'rollDown 100ms linear forwards';
+  turn = 0;
+  clicked = 0;
+  cells = [];
+  takenCells = [];
+  hasWinner = false;
+  winner = null;
+  winStatement;
+  textField.textContent = "";
 
-  cells.forEach(cell => {
-    cell.textContent = "";
-  });
+  gameBoard.newBoard();
+  setTimeout(() => gameBoard.createBoard(), 250);
 }
