@@ -7,12 +7,13 @@ let clicked = 0;
 let cells = [];
 let takenCells = [];
 let hasWinner = false;
+let winner = null;
 let winStatement;
 
 startBtn.addEventListener('click', () => {
   startBtn.style.animation = ' rollOut .4s linear forwards';
   setTimeout(() => startBtn.remove(), 400);
-  setTimeout(() => gameBoard.createBoard(), 200);
+  setTimeout(() => gameBoard.createBoard(), 1000);
 })
 
 const gameBoard = {
@@ -96,13 +97,42 @@ function checkWinner() {
     if (line === "XXX") {
       hasWinner = true;
       winStatement = "X Wins!";
+      winner = "X";
+      scoreX += 1;
     } else if (line === "OOO") {
       hasWinner = true;
       winStatement = "O Wins!";
+      winner = "O";
+      scoreX += 1;
     }
   });
 
   if (hasWinner) {
     textField.textContent = winStatement;
+    updateFooter();
+  }
+}
+
+
+//Creating footer with info
+const footer = document.querySelector("footer");
+const timesPlayedText = document.querySelector(".times-played");
+const scoreXText = document.querySelector(".score-x");
+const scoreOText = document.querySelector(".score-o");
+let timesPlayed = 0;
+let scoreX = 0;
+let scoreO = 0;
+
+startBtn.onclick = () => {
+  footer.style.animation = "popUp 1000ms ease-in-out forwards";
+}
+
+function updateFooter() {
+  if (hasWinner) {
+    timesPlayedText.textContent += " " + winStatement;
+    switch (winner) {
+      case "X": scoreXText += " " + scoreX; break;
+      case "O": scoreXText += " " + scoreO; break;
+    }
   }
 }
