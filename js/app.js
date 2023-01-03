@@ -7,19 +7,32 @@ let clicked = 0;
 let cells = [];
 let takenCells = [];
 let hasWinner = false;
+let winner = null;
 let winStatement;
+let xClr = "#adfb90"
+let oClr = "#fbbd90"
+
+let timesPlayed = 0;
+let scoreX = 0;
+let scoreO = 0;
 
 startBtn.addEventListener('click', () => {
-  startBtn.style.animation = ' rollOut .4s linear forwards';
+  startBtn.style.animation = 'rollOut .4s linear forwards';
   setTimeout(() => startBtn.remove(), 400);
-  setTimeout(() => gameBoard.createBoard(), 200);
+  setTimeout(() => gameBoard.createBoard(), 1000);
 })
 
 const gameBoard = {
   board: document.createElement('div'),
 
+  newBoard: function () {
+    this.board.remove();
+    this.board = document.createElement('div');
+  },
+
   createBoard: function () {
     textField.textContent = "To begin, place a piece on the board. X starts!";
+    textField.style.animation = "rollIn .4s .4s linear forwards"
     this.board.id = 'gameBoard';
     this.createCells();
     cells.forEach(cell => {
@@ -48,9 +61,11 @@ const gameBoard = {
 function setPiece(cellClicked) {
   if (isValidPosition(cellClicked)) {
     if (turn === 0) {
+      cells[cellClicked].style.color = xClr;
       cells[cellClicked].textContent = 'X';
       turn = 1;
     } else {
+      cells[cellClicked].style.color = oClr;
       cells[cellClicked].textContent = 'O';
       turn = 0;
     }
@@ -96,13 +111,103 @@ function checkWinner() {
     if (line === "XXX") {
       hasWinner = true;
       winStatement = "X Wins!";
+      winner = "X";
+      scoreX++;
     } else if (line === "OOO") {
       hasWinner = true;
       winStatement = "O Wins!";
+      winner = "O";
+      scoreO++;
     }
   });
 
   if (hasWinner) {
     textField.textContent = winStatement;
+    updateFooter();
   }
+}
+
+
+//Creating footer with info
+const footer = document.querySelector("footer");
+const timesPlayedText = document.getElementById("times-played");
+const scoreXText = document.getElementById("score-x");
+const scoreOText = document.getElementById("score-o");
+let timesPlayedOut = document.getElementById("timesPlayedOut");
+let scoreOutO = document.getElementById("scoreOutO");
+let scoreOutX = document.getElementById("scoreOutX");
+
+//Footer on start:
+startBtn.onclick = () => {
+  footer.style.animation = "popUp 1000ms ease-in-out forwards";
+  timesPlayed = getTimes();
+  scoreX = getScoreX();
+  scoreO = getScoreO();
+
+  timesPlayedOut.textContent = timesPlayed;
+  scoreOutX.textContent = scoreX;
+  scoreOutO.textContent = scoreO;
+}
+
+function updateFooter() {
+  timesPlayed++;
+  timesPlayedOut.textContent = timesPlayed;
+
+  switch (winner) {
+    case "X": scoreOutX.textContent = scoreX; break;
+    case "O": scoreOutO.textContent = scoreO; break;
+    default: break;
+  }
+  console.log("XScore: " + scoreX);
+  console.log("OScore: " + scoreO);
+
+  askToReset();
+}
+
+const resetPage = document.createElement("div");
+const resetButton = document.createElement("button");
+resetPage.appendChild(resetButton);
+
+resetPage.id = "resetPage";
+resetButton.textContent = "Reset game?";
+resetButton.className = "btn btn-dark resetButton"
+
+function askToReset() {
+  resetPage.style.animation = ""
+  gameContainer.appendChild(resetPage);
+}
+
+resetButton.onclick = () => {
+  resetGame();
+};
+
+function resetGame() {
+  localStorage.setItem("timesPlayed", timesPlayed)
+  localStorage.setItem("scoreX", scoreX)
+  localStorage.setItem("scoreO", scoreO)
+
+  resetPage.style.animation = 'rollDown 100ms linear forwards';
+  turn = 0;
+  clicked = 0;
+  cells = [];
+  takenCells = [];
+  hasWinner = false;
+  winner = null;
+  winStatement;
+  textField.textContent = "";
+
+  gameBoard.newBoard();
+  setTimeout(() => gameBoard.createBoard(), 250);
+}
+
+function getTimes() {
+  return localStorage.getItem("timesPlayed");
+}
+
+function getScoreX() {
+  return localStorage.getItem("scoreX");
+}
+
+function getScoreO() {
+  return localStorage.getItem("scoreO");
 }

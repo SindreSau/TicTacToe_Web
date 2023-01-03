@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<title>TicTacToe</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/bootstrap-grid.css">
-	<link rel="stylesheet" href="css/bootstrap-reboot.css">
-	<link rel="stylesheet" href="css/bootstrap-utilities.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="Assets/logoTicTacToe%20Background%20Removed.png">
 </head>
@@ -25,23 +22,28 @@
 		</div>
 	</nav>
 
-	<main class="bg-dark-subtle">
+	<main id="gameContainer">
+		<button id="startBtn" class="btn btn-outline-dark">
+			<h2>Start game</h2>
+		</button>
 		<h2 id="textField"></h2>
-		<div id="gameContainer">
-			<button id="startBtn" class="btn btn-outline-dark">
-				<h2>Start game</h2>
-			</button>
-		</div>
-
 	</main>
 
 	<footer>
-
+		<div class="footerTextContainer" id="times-played">
+			<h3>Times played: </h3>
+			<h3 id="timesPlayedOut"></h3>
+		</div>
+		<div class="footerTextContainer" id="score-x">
+			<h3>Score X: </h3>
+			<h3 id="scoreOutX"></h3>
+		</div>
+		<div class="footerTextContainer" id="score-o">
+			<h3>score O: </h3>
+			<h3 id="scoreOutO"></h3>
+		</div>
 	</footer>
 
-	<script src="js/bootstrap.bundle.js"></script>
-	<script src="js/bootstrap.esm.js"></script>
-	<script src="js/bootstrap.js"></script>
 	<script src="js/app.js"></script>
 </body>
 
