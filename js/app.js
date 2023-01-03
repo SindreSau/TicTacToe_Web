@@ -21,6 +21,7 @@ const gameBoard = {
 
   createBoard: function () {
     textField.textContent = "To begin, place a piece on the board. X starts!";
+    textField.style.animation = "rollIn .4s .4s linear forwards"
     this.board.id = 'gameBoard';
     this.createCells();
     cells.forEach(cell => {

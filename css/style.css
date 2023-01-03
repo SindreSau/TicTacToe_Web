@@ -65,28 +65,29 @@ main {
     align-items: center;
     flex: auto;
     gap: 10%;
-}
-
-@media (max-width: 500px) {
-    #gameBoard {
-        max-width: 90vw;
-        aspect-ratio: 1;
-    }
+    padding-inline: 10vw;
 }
 
 #gameBoard {
     height: 60%;
     aspect-ratio: 1;
+
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    gap: 1vw;
+
+    gap: 1%;
+
     font-weight: bold;
 
+    /* animation on startClick */
     transform: translateX(100vw);
     animation: rollIn .4s linear forwards;
 }
 
+#textField {
+    transform: translateX(100vw);
+}
 
 .cells {
     width: 100%;
@@ -161,4 +162,41 @@ footer {
     display: inline-flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+
+
+/* Mobile: */
+@media (max-width: 680px) {
+    #gameBoard {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+
+        width: 80vw;
+        height: 80vw;
+
+        font-weight: bold;
+
+        /* animation on startClick */
+        transform: translateX(100vw);
+        animation: rollIn .4s linear forwards;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: clamp(12px, 8vw, 20px);
+    }
+
+    footer {
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    h3 {
+        font-size: clamp(10px, 6vw, 18px);
+    }
 }
