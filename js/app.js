@@ -16,6 +16,18 @@ let timesPlayed = 0;
 let scoreX = 0;
 let scoreO = 0;
 
+let firstVisit = false;
+checkFirstVisit();
+
+function checkFirstVisit() {
+  if (localStorage.getItem('was_visited')) {
+    return;
+  }
+  firstVisit = true;
+  localStorage.setItem('was_visited', true);
+}
+console.log(firstVisit);
+
 startBtn.addEventListener('click', () => {
   startBtn.style.animation = 'rollOut .4s linear forwards';
   setTimeout(() => startBtn.remove(), 400);
@@ -140,10 +152,11 @@ let scoreOutX = document.getElementById("scoreOutX");
 //Footer on start:
 startBtn.onclick = () => {
   footer.style.animation = "popUp 1000ms ease-in-out forwards";
-  timesPlayed = getTimes();
-  scoreX = getScoreX();
-  scoreO = getScoreO();
-
+  if (!firstVisit) {
+    timesPlayed = getTimes();
+    scoreX = getScoreX();
+    scoreO = getScoreO();
+  }
   timesPlayedOut.textContent = timesPlayed;
   scoreOutX.textContent = scoreX;
   scoreOutO.textContent = scoreO;
