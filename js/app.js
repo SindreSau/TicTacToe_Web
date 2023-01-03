@@ -9,6 +9,9 @@ let takenCells = [];
 let hasWinner = false;
 let winner = null;
 let winStatement;
+let xClr = "#adfb90"
+let oClr = "#fbbd90"
+
 let timesPlayed = 0;
 let scoreX = 0;
 let scoreO = 0;
@@ -58,9 +61,11 @@ const gameBoard = {
 function setPiece(cellClicked) {
   if (isValidPosition(cellClicked)) {
     if (turn === 0) {
+      cells[cellClicked].style.color = xClr;
       cells[cellClicked].textContent = 'X';
       turn = 1;
     } else {
+      cells[cellClicked].style.color = oClr;
       cells[cellClicked].textContent = 'O';
       turn = 0;
     }
@@ -107,12 +112,12 @@ function checkWinner() {
       hasWinner = true;
       winStatement = "X Wins!";
       winner = "X";
-      scoreX += 1;
+      scoreX++;
     } else if (line === "OOO") {
       hasWinner = true;
       winStatement = "O Wins!";
       winner = "O";
-      scoreX += 1;
+      scoreO++;
     }
   });
 
@@ -132,20 +137,30 @@ let timesPlayedOut = document.getElementById("timesPlayedOut");
 let scoreOutO = document.getElementById("scoreOutO");
 let scoreOutX = document.getElementById("scoreOutX");
 
+//Footer on start:
 startBtn.onclick = () => {
   footer.style.animation = "popUp 1000ms ease-in-out forwards";
+  timesPlayed = getTimes();
+  scoreX = getScoreX();
+  scoreO = getScoreO();
+
+  timesPlayedOut.textContent = timesPlayed;
+  scoreOutX.textContent = scoreX;
+  scoreOutO.textContent = scoreO;
 }
 
 function updateFooter() {
   timesPlayed++;
   timesPlayedOut.textContent = timesPlayed;
+
   switch (winner) {
-    case "X": scoreOutX = scoreX; break;
-    case "O": scoreOutO = scoreO; break;
+    case "X": scoreOutX.textContent = scoreX; break;
+    case "O": scoreOutO.textContent = scoreO; break;
     default: break;
   }
-  console.log("XScore:" + scoreXText);
-  console.log("OScore:" + scoreOText);
+  console.log("XScore: " + scoreX);
+  console.log("OScore: " + scoreO);
+
   askToReset();
 }
 
@@ -156,17 +171,21 @@ resetPage.appendChild(resetButton);
 resetPage.id = "resetPage";
 resetButton.textContent = "Reset game?";
 resetButton.className = "btn btn-dark resetButton"
-resetButton.onclick = () => {
-  resetGame();
-};
 
 function askToReset() {
   resetPage.style.animation = ""
   gameContainer.appendChild(resetPage);
 }
 
+resetButton.onclick = () => {
+  resetGame();
+};
+
 function resetGame() {
-  alert("Resets")
+  localStorage.setItem("timesPlayed", timesPlayed)
+  localStorage.setItem("scoreX", scoreX)
+  localStorage.setItem("scoreO", scoreO)
+
   resetPage.style.animation = 'rollDown 100ms linear forwards';
   turn = 0;
   clicked = 0;
@@ -179,4 +198,16 @@ function resetGame() {
 
   gameBoard.newBoard();
   setTimeout(() => gameBoard.createBoard(), 250);
+}
+
+function getTimes() {
+  return localStorage.getItem("timesPlayed");
+}
+
+function getScoreX() {
+  return localStorage.getItem("scoreX");
+}
+
+function getScoreO() {
+  return localStorage.getItem("scoreO");
 }
