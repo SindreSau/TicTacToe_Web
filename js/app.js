@@ -9,6 +9,9 @@ let takenCells = [];
 let hasWinner = false;
 let winner = null;
 let winStatement;
+let timesPlayed = 0;
+let scoreX = 0;
+let scoreO = 0;
 
 startBtn.addEventListener('click', () => {
   startBtn.style.animation = ' rollOut .4s linear forwards';
@@ -117,23 +120,47 @@ function checkWinner() {
 
 //Creating footer with info
 const footer = document.querySelector("footer");
-const timesPlayedText = document.querySelector(".times-played");
-const scoreXText = document.querySelector(".score-x");
-const scoreOText = document.querySelector(".score-o");
-let timesPlayed = 0;
-let scoreX = 0;
-let scoreO = 0;
+const timesPlayedText = document.getElementById("times-played");
+const scoreXText = document.getElementById("score-x");
+const scoreOText = document.getElementById("score-o");
+let timesPlayedOut = document.getElementById("timesPlayedOut");
+let scoreOutO = document.getElementById("scoreOutO");
+let scoreOutX = document.getElementById("scoreOutX");
 
 startBtn.onclick = () => {
   footer.style.animation = "popUp 1000ms ease-in-out forwards";
 }
 
 function updateFooter() {
-  if (hasWinner) {
-    timesPlayedText.textContent += " " + winStatement;
-    switch (winner) {
-      case "X": scoreXText += " " + scoreX; break;
-      case "O": scoreXText += " " + scoreO; break;
-    }
+  timesPlayed++;
+  timesPlayedOut.textContent = timesPlayed;
+  switch (winner) {
+    case "X": scoreOutX = scoreX; break;
+    case "O": scoreOutO = scoreO; break;
+    default: break;
   }
+  console.log("XScore:" + scoreXText);
+  console.log("OScore:" + scoreOText);
+  askToReset();
+}
+
+const resetPage = document.createElement("div");
+const resetButton = document.createElement("button");
+resetPage.appendChild(resetButton);
+
+resetPage.id = "resetPage";
+resetButton.textContent = "Reset game?";
+resetButton.onclick = resetGame;
+resetButton.className = "btn btn-dark resetButton"
+
+function askToReset() {
+  gameContainer.appendChild(resetPage);
+}
+
+function resetGame() {
+  resetPage.style.animation = ' rollOut .4s linear forwards';
+
+  cells.forEach(cell => {
+    cell.textContent = "";
+  });
 }

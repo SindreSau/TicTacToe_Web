@@ -164,7 +164,27 @@ footer {
     align-items: center;
 }
 
+.footerTextContainer {
+    display: inline-flex;
+}
 
+#resetPage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    background-color: #cadbedd8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resetButton {
+    font-size: 100px;
+}
 
 /* Mobile: */
 @media (max-width: 680px) {
